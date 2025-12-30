@@ -50,12 +50,11 @@ router.post("/", async (req, res) => {
     viewsUsed: 0,
   });
 
-  const baseUrl =
-    process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+  const baseUrl = process.env.BASE_URL;
 
   res.status(201).json({
     id: paste._id,
-    url: `${baseUrl}/api/pastes/p/${paste._id}`,
+    url: `https://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`,
   });
 });
 
