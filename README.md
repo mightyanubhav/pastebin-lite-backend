@@ -32,3 +32,6 @@ to : `http://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`
 6) npm i 
 7) then do npm run dev to run locally on port 5173
 
+Persistence Layer
+
+MongoDB Atlas was used for persistence to ensure data survives across requests. UUIDs were chosen for secure, non-sequential paste IDs. The backend returns absolute URLs and enforces immediate invalidation on TTL or view-limit breaches. Deterministic time handling was added to support automated testing, and paste content is safely rendered to prevent script execution.
