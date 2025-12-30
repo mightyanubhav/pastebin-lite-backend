@@ -12,15 +12,13 @@ Following are the procedure to run locally :
 4) create .env file in root folder -> 
 5) paste the following 
 
-<!-- 
-MONGO_URI=<MongoDB Atlas connection string>
-BASE_URL=<Backend public URL>
-TEST_MODE=0 
+        MONGO_URI=<MongoDB Atlas connection string>
+        BASE_URL=<Backend public URL>
+        TEST_MODE=0 
 
-Also in pastes.js go to res.status of api uri /
-change  url: `https://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`,
-to : `http://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`
--->
+        Also in pastes.js go to res.status of api uri /
+        change  url: `https://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`,
+        to : `http://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`
 
 5) Do npm run dev. backend will start to work 
 
