@@ -6,11 +6,16 @@ const connectDB = require("./db");
 const healthRoutes = require("./routes/health");
 const pasteRoutes = require("./routes/pastes");
 
+const localRateLimiter = require('./middlewares/localRateLimiter');
+const globalRateLimiter = require('./middlewares/globalRateLimiter');
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+app.use(localRateLimiter);
+app.use(globalRateLimiter);
 
 app.get("/debug", (req, res) => {
   res.send("Server is running");
