@@ -25,8 +25,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// 🚨 REQUIRED for Vercel
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
