@@ -2,7 +2,7 @@ const express = require("express");
 const { v4: uuid } = require("uuid");
 const Paste = require("../models/Paste");
 const { getNowMs } = require("../utils/time");
-const redisClient = require('../utils/redisClient');
+const redisClient = require("../utils/redisClient");
 
 const CACHE_TTL_SECONDS = 300; // 5 minutes
 
@@ -13,7 +13,10 @@ function getPasteCacheKey(id) {
 function computeCacheTTL(paste, now) {
   if (!paste.expiresAt) return CACHE_TTL_SECONDS;
   const remainingMs = paste.expiresAt - now;
-  return Math.max(1, Math.min(CACHE_TTL_SECONDS, Math.floor(remainingMs / 1000)));
+  return Math.max(
+    1,
+    Math.min(CACHE_TTL_SECONDS, Math.floor(remainingMs / 1000)),
+  );
 }
 
 async function readPasteWithCache(id, now) {
@@ -36,7 +39,7 @@ async function readPasteWithCache(id, now) {
     await redisClient.setEx(
       cacheKey,
       computeCacheTTL(paste, now),
-      JSON.stringify(paste)
+      JSON.stringify(paste),
     );
 
     return paste;
@@ -73,7 +76,7 @@ async function readPasteWithCache(id, now) {
   await redisClient.setEx(
     cacheKey,
     computeCacheTTL(paste, now),
-    JSON.stringify(payload)
+    JSON.stringify(payload),
   );
 
   return payload;
@@ -91,7 +94,7 @@ const escapeHtml = (str) =>
         ">": "&gt;",
         '"': "&quot;",
         "'": "&#39;",
-      }[m])
+      })[m],
   );
 
 router.post("/", async (req, res) => {
@@ -126,11 +129,11 @@ router.post("/", async (req, res) => {
     viewsUsed: 0,
   });
 
-  const baseUrl = process.env.BASE_URL;
+  // const baseUrl = process.env.BASE_URL;
 
   res.status(201).json({
     id: paste._id,
-    url: `https://${baseUrl.replace(/^https?:\/\//, "")}/api/pastes/p/${paste._id}`,
+    url: `/api/pastes/p/${paste._id}`,
   });
 });
 
@@ -157,7 +160,6 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 // router.get("/p/:id", async (req, res) => {
 //   try {
@@ -216,6 +218,5 @@ router.get("/p/:id", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 
 module.exports = router;
