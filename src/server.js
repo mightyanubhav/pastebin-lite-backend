@@ -13,7 +13,21 @@ const globalRateLimiter = require("./middlewares/globalRateLimiter");
 
 const app = express();
 
-app.use(cors());
+
+const corsOptions = {
+  origin: [
+    "https://pastebin-lite-frontend-beige.vercel.app",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOptions));
+
+// 🚨 REQUIRED for Vercel
+app.options("*", cors(corsOptions));
+
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 let server; 
